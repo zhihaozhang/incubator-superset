@@ -313,6 +313,16 @@ function nvd3Vis(element, props) {
           .reduceXTicks(reduceXTicks)
           .groupSpacing(0.1); // Distance between each group of bars.
 
+          chart.legend.dispatch.on('legendClick',function (evt) {
+              svg.selectAll('.bar-chart-label').remove();
+              setTimeout(function () {
+                  if(!fd.show_bar_value){
+                      svg.selectAll('.bar-chart-label').remove();
+                  }
+                  addTotalBarValues(svg, chart, data, stacked, fd.y_axis_format);
+
+              }, animationTime + 1);
+
         chart.xAxis.showMaxMin(false);
 
         chart.stacked(isBarStacked);
@@ -333,6 +343,11 @@ function nvd3Vis(element, props) {
           width = computeBarChartWidth(data, isBarStacked, maxWidth);
         }
         chart.width(width);
+
+
+
+          })
+
         break;
 
       case 'pie':
